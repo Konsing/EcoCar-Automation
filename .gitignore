@@ -1,3 +1,7 @@
+# Exclude unnecessary folders
+/W's Alt EcoCAR
+/Streamlit
+
+*.env
 *.pickle
 *.json
-*.env
