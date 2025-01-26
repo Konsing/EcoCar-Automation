@@ -11,12 +11,15 @@ This system consists of **three main components**:
 2. **Automated Email Notifications** – Uses Gmail API to send structured onboarding emails.
 3. **Google Sheets Integration** – Manages and updates the team’s headcount automatically.
 
+Additionally, **Airflow has been implemented** to fully automate the scheduling and execution of onboarding tasks.
+
 ---
 
 ## 🏆 Technical Highlights
 ✔️ **Automated onboarding/offboarding** using **Python & Airflow**, reducing manual tasks by 50%.  
 ✔️ **Integrated Google OAuth2 & Gmail API** for secure communication & event scheduling.  
 ✔️ **Deployed automation on Google Cloud Platform (GCP)** for efficiency & scalability.  
+✔️ **Airflow DAG** manages automated workflow execution.  
 
 ---
 
@@ -64,6 +67,7 @@ This system consists of **three main components**:
 │   │── write.py                          # Data update script
 │
 │── .gitignore                           # Ignores sensitive files
+│── Airflow_DAG_ecocar_onboarding.py     # 🟢 Airflow DAG for automated workflow execution
 │── main.py                              # Main script to orchestrate onboarding tasks
 │── README.md                            # Project documentation
 ```
@@ -77,6 +81,7 @@ Ensure you have:
 - **Python 3.x** installed.
 - Required Python libraries (`pandas`, `requests`, `google-auth`, etc.).
 - **Google API Access** with OAuth2 credentials.
+- **Apache Airflow installed and configured**.
 
 ### 🚀 Setup Instructions
 
@@ -107,6 +112,21 @@ Ensure you have:
    jupyter notebook TestingForm.ipynb
    ```
 
+6️⃣ **Deploy & Run the Airflow DAG (Locally)**
+   - Move the DAG file to Airflow’s DAGs directory:
+     ```sh
+     mv Airflow_DAG_ecocar_onboarding.py ~/airflow/dags/
+     ```
+   - Restart the Airflow Scheduler:
+     ```sh
+     airflow scheduler
+     ```
+   - Start the Airflow Web UI:
+     ```sh
+     airflow webserver --port 8080
+     ```
+   - Open [http://localhost:8080](http://localhost:8080) and enable the DAG.
+
 ---
 
 ## 📊 How Each Component Works
@@ -122,6 +142,14 @@ Ensure you have:
 ### **3️⃣ Google Sheets Data Handling (`Read Write Google Sheet`)**
 - Reads & writes **team headcount** using Google Sheets API.
 - Ensures **real-time updates** for team member tracking.
+
+### **4️⃣ Airflow DAG (`Airflow_DAG_ecocar_onboarding.py`)**
+- Automates the onboarding pipeline:
+  1. **Checks for new onboarding requests**.
+  2. **Emails team leaders for approval**.
+  3. **Processes leader responses (Approve/Reject)**.
+  4. **Sends onboarding emails to accepted members**.
+  5. **Updates Google Sheets with final decisions**.
 
 ---
 
@@ -144,11 +172,14 @@ Ensure you have:
   - Automates leader decisions.
   - Sends email notifications.
 
+### **`Airflow_DAG_ecocar_onboarding.py`**
+- Airflow **DAG that fully automates** the onboarding pipeline.
+
 ---
 
 ## 🚀 Future Enhancements
 🔹 **Auto-sync with Google Calendar** – Schedule onboarding meetings dynamically.  
-🔹 **AI-Powered Form Processing** – Use NLP to analyze responses for anomalies.  
+🔹 **AI-Powered Form Processing** – Use NLP to analyze responses for anomalies.   
 
 ---
 
